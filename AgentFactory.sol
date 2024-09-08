@@ -4,10 +4,10 @@ pragma solidity ^0.8.0;
 contract AgentFactory {
     // Structure for an agent
     struct Agent {
-        address agentAddress;  // The agent's public address (derived from private key)
-        bool active;           // Status of the agent (active/inactive)
-        uint createdAt;        // Timestamp when the agent was created
-        string metadata;       // Additional metadata related to the agent (off-chain)
+        address agentAddress;
+        bool active;
+        uint createdAt;
+        string metadata;
     }
 
     // Mapping of agents by their public address
@@ -17,11 +17,22 @@ contract AgentFactory {
     event AgentCreated(address indexed agentAddress, uint timestamp);
     event AgentDestroyed(address indexed agentAddress, uint timestamp);
 
-    // Create a new agent
-    function createAgent(address _agentAddress, string memory _metadata) external {
-        require(agents[_agentAddress].agentAddress == address(0), "Agent already exists");
+    // Modifier to restrict access to governance systems
+    address public governanceContract;
 
-        // Add the agent's public key and other details
+    constructor(address _governanceContract) {
+        governanceContract = _governanceContract;
+    }
+
+    modifier onlyGovernance() {
+        require(msg.sender == governanceContract, "Only the governance contract can perform this action");
+        _;
+    }
+
+    // Function to create an agent (restricted to DAIO governance)
+    function createAgent(address _agentAddress, string memory _metadata) external onlyGovernance {
+        require(!agents[_agentAddress].active, "Agent already exists");
+
         agents[_agentAddress] = Agent({
             agentAddress: _agentAddress,
             active: true,
@@ -29,18 +40,15 @@ contract AgentFactory {
             metadata: _metadata
         });
 
-        // Emit an event for the creation of a new agent
         emit AgentCreated(_agentAddress, block.timestamp);
     }
 
-    // Destroy an existing agent
-    function destroyAgent(address _agentAddress) external {
+    // Function to destroy an agent (restricted to DAIO governance)
+    function destroyAgent(address _agentAddress) external onlyGovernance {
         require(agents[_agentAddress].active, "Agent is already inactive");
 
-        // Mark the agent as inactive (agent destroyed)
         agents[_agentAddress].active = false;
 
-        // Emit an event for the destruction of the agent
         emit AgentDestroyed(_agentAddress, block.timestamp);
     }
 
