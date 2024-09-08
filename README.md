@@ -1,4 +1,6 @@
-DAIO: Decentralized Autonomous Intelligent Organization
+# DAIO: Decentralized Autonomous Intelligent Organization
+
+a framework for Decentralized Agency
 
 The Decentralized Autonomous Intelligent Organization (DAIO) is an advanced governance model that combines fractionalized NFT voting and token-based ERC20 governance with AI influence. The system is designed to enable decentralized decision-making for organizations where both human and AI votes play a role in reaching consensus.
 
