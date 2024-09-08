@@ -1,4 +1,3 @@
-
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -19,12 +18,12 @@ contract AgentManagement {
     // Update agent metadata (only by governance)
     function updateAgentMetadata(address _agentAddress, string memory _newMetadata) external {
         require(agentFactory.isAgentActive(_agentAddress), "Agent is not active");
-
-        // Call a function in AgentFactory to update agent metadata
-        AgentFactory.Agent memory agent = agentFactory.agents(_agentAddress);
+        
+        // Update the metadata in AgentFactory
+        agentFactory.updateMetadata(_agentAddress, _newMetadata);
 
         // Emit an update event
-        emit AgentUpdated(_agentAddress, agent.active, block.timestamp);
+        emit AgentUpdated(_agentAddress, true, block.timestamp);
     }
 
     // Deactivate agent due to inactivity
@@ -33,7 +32,7 @@ contract AgentManagement {
         require(agent.active, "Agent is already inactive");
 
         // Check if the agent has been inactive for too long
-        if (block.timestamp - agent.createdAt > inactivityTimeout) {
+        if (block.timestamp - agent.lastActivity > inactivityTimeout) {
             // Mark agent as inactive (destroyed)
             agentFactory.destroyAgent(_agentAddress);
 
