@@ -16,15 +16,6 @@ Project Structure
 │   ├── ERC20AgentGovernance.sol        # Governance contract using ERC20 token-based voting for agent creation
 ├── README.md                           # Project documentation
 ├── DAIO-Whitepaper.md                  # The complete DAIO whitepaper
-├── package.json                        # Dependencies and scripts
-├── migrations/
-│   └── 1_deploy_contracts.js           # Migration scripts for deploying contracts
-├── tests/
-│   ├── test_FractionalizedNFTVoting.js # Tests for FractionalizedNFTVoting contract
-│   ├── test_ERC20AgentGovernance.js    # Tests for ERC20AgentGovernance contract
-└── scripts/
-    ├── deploy.js                       # Deployment script for deploying the contracts
-    └── interaction.js                  # Script for interacting with deployed contracts
 ```
 Core Components
 
@@ -61,7 +52,7 @@ This contract builds on OpenZeppelin's governance model using ERC20Votes for pro
 Use Case Example:
 
     FractionalizedNFTVoting:
-        Scenario: A DAO governed by NFTs votes on a proposal to upgrade the system. Each subcomponent (Development, Marketing, Community) votes, including AI. If the proposal is approved by 2/3 subcomponents, it is executed.
+        Scenario: A DAIO governed by NFTs votes on a proposal to upgrade the system. Each subcomponent (Development, Marketing, Community) votes, including AI. If the proposal is approved by 2/3 subcomponents, it is executed.
 
     ERC20AgentGovernance:
         Scenario: Token holders propose to create a new agent in the DAIO system. The proposal undergoes voting using ERC20 tokens, and AI participates in each subcomponent (Development, Marketing, Community). A timelock ensures a delay before execution, allowing time for review and potential vetoes.
