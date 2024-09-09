@@ -7,43 +7,57 @@ contract AgentFactory {
         address agentAddress;
         bool active;
         uint createdAt;
-        string metadata;
+        bytes32 metadataHash; // Storing metadata as a hash for gas optimization
     }
 
     // Mapping of agents by their public address
     mapping(address => Agent) public agents;
 
+    // Governance contract that can create/destroy agents, set once during deployment and immutable thereafter
+    address public immutable governanceContract;
+
     // Events
-    event AgentCreated(address indexed agentAddress, uint timestamp);
+    event AgentCreated(address indexed agentAddress, uint timestamp, bytes32 metadataHash);
     event AgentDestroyed(address indexed agentAddress, uint timestamp);
+    event AgentReactivated(address indexed agentAddress, uint timestamp);
 
     // Modifier to restrict access to governance systems
-    address public governanceContract;
-
-    constructor(address _governanceContract) {
-        governanceContract = _governanceContract;
-    }
-
     modifier onlyGovernance() {
         require(msg.sender == governanceContract, "Only the governance contract can perform this action");
         _;
     }
 
-    // Function to create an agent (restricted to DAIO governance)
-    function createAgent(address _agentAddress, string memory _metadata) external onlyGovernance {
+    // Constructor to set the governance contract, immutable after deployment
+    constructor(address _governanceContract) {
+        require(_governanceContract != address(0), "Invalid governance address");
+        governanceContract = _governanceContract;
+    }
+
+    // Function to create an agent (restricted to governance contract)
+    function createAgent(address _agentAddress, bytes32 _metadataHash) external onlyGovernance {
         require(!agents[_agentAddress].active, "Agent already exists");
 
         agents[_agentAddress] = Agent({
             agentAddress: _agentAddress,
             active: true,
             createdAt: block.timestamp,
-            metadata: _metadata
+            metadataHash: _metadataHash
         });
 
-        emit AgentCreated(_agentAddress, block.timestamp);
+        emit AgentCreated(_agentAddress, block.timestamp, _metadataHash);
     }
 
-    // Function to destroy an agent (restricted to DAIO governance)
+    // Function to reactivate an inactive agent (restricted to governance contract)
+    function reactivateAgent(address _agentAddress) external onlyGovernance {
+        require(!agents[_agentAddress].active, "Agent is already active");
+        require(agents[_agentAddress].agentAddress != address(0), "Agent does not exist");
+
+        agents[_agentAddress].active = true;
+
+        emit AgentReactivated(_agentAddress, block.timestamp);
+    }
+
+    // Function to destroy an agent (restricted to governance contract)
     function destroyAgent(address _agentAddress) external onlyGovernance {
         require(agents[_agentAddress].active, "Agent is already inactive");
 
