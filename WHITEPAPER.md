@@ -1,4 +1,7 @@
-DAIO White Paper
+# Decentralized Autonomous Intelligent Organization (DAIO)
+
+DAIO is arguably redundant as DAO has always been Decentralized Autonomous Organization. DAIO was chosen to show distinction from pre-agi frameworks for DAO never the less this is DAIO
+
 Abstract
 
 The Decentralized Autonomous Intelligent Organization (DAIO) is a next-generation governance structure powered by a hybrid approach of decentralized human governance and artificial intelligence (AI). This system is designed to give voice to all major components of a decentralized ecosystem, with checks and balances across development, marketing, and community sectors. The inclusion of AI provides data-driven insight, helping to inform decision-making, without overwhelming human agency.
