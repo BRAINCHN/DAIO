@@ -1,6 +1,6 @@
 # Decentralized Autonomous Intelligent Organization (DAIO)
 
-DAIO is arguably redundant as DAO has always been Decentralized Autonomous Organization. DAIO was chosen to show distinction from pre-agi frameworks for DAO never the less this is DAIO
+DAIO is arguably redundant as DAO has always been Decentralized Autonomous Organization. DAIO was chosen to show distinction from pre-agi frameworks for DAO never the less this is DAIO. Intelligence is Intelligence.
 
 Abstract
 
