@@ -1,6 +1,6 @@
 # DAIO: Decentralized Autonomous Intelligent Organization
 
-This project is alpha and is posted for research purposes only. There are intentional errors in the compile to make sure this does not get set free before the audit
+This project is alpha and is posted for research purposes only. There are intentional errors in the compile to make sure this does not get set free before the audit.
 
 a framework for Decentralized Agency
 
